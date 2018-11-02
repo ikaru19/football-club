@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Football Club</string>
+
+    <string name="title_home">Last Match</string>
+    <string name="title_dashboard">Next Match</string>
+    <string name="title_activity_event_detail">EventDetail</string>
+
+    <string name="shots">Shots</string>
+    <string name="goal_keeper">Goal Keeper</string>
+    <string name="midfield">Midfield</string>
+    <string name="forward">Forward</string>
+    <string name="subtitutes">Subtitutes</string>
+
+
+</resources>

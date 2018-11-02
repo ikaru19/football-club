@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailSwipe"
+>
+    <ScrollView android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+    >
+
+
+
+        <TextView
+                android:id="@+id/someDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="-"/>
+
+        <TextView
+                android:id="@+id/tvVs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="VS"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/someDate"/>
+
+        <!--Home Score-->
+        <TextView
+                android:id="@+id/tvTeam1Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@id/tvVs"
+                app:layout_constraintRight_toLeftOf="@id/tvVs"
+                app:layout_constraintTop_toBottomOf="@+id/someDate"
+                tools:text="-"/>
+
+        <!--Away Score-->
+        <TextView
+                android:id="@+id/tvTeam2Score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toRightOf="@id/tvVs"
+                app:layout_constraintStart_toEndOf="@id/tvVs"
+                app:layout_constraintTop_toBottomOf="@+id/someDate"
+                tools:text="-"/>
+
+        <ImageView
+                android:id="@+id/ivTeam1Logo"
+                android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:layout_margin="1dp"
+                app:layout_constraintTop_toTopOf="@+id/tvTeam1Name"
+                app:layout_constraintBottom_toBottomOf="@+id/someDate"
+                />
+
+
+        <!--Home Name-->
+        <TextView
+                android:id="@+id/tvTeam1Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivTeam1Logo"
+                tools:text="Home"/>
+
+        <!--Away Logo-->
+        <ImageView
+                android:id="@+id/ivTeam2Logo"
+                android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:layout_margin="1dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvTeam2Name"
+                app:layout_constraintBottom_toBottomOf="@+id/someDate"/>
+         <!--Away Name-->
+        <TextView
+                android:id="@+id/tvTeam2Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+
+
+                app:layout_constraintRight_toRightOf="parent"
+
+
+                app:layout_constraintTop_toBottomOf="@+id/ivTeam2Logo"
+                tools:text="Away"/>
+
+        <android.support.constraint.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tvTeam1Name,tvTeam2Name"
+        />
+
+        <View
+                android:id="@+id/line"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrier"
+        />
+
+        <!-- Home Shots -->
+        <TextView
+                android:id="@+id/home_shots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                app:layout_constraintTop_toBottomOf="@id/line"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:padding="8dp"/>
+
+        <TextView
+                android:id="@+id/tv_shots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingBottom="4dp"
+                android:text="@string/shots"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line" />
+
+        <!-- Away Shots -->
+        <TextView
+                android:id="@+id/away_shots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                app:layout_constraintTop_toBottomOf="@id/line"
+                app:layout_constraintRight_toRightOf="parent"
+                android:padding="8dp"/>
+
+
+
+        <View
+                android:id="@+id/line2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_shots"
+
+        />
+
+        <TextView
+            android:id="@+id/TxtLineUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LineUps"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="8dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/line2"
+        />
+
+        <RelativeLayout
+                android:id="@+id/gk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/TxtLineUp"
+                android:layout_marginTop="12dp">
+
+            <!-- Home GK -->
+            <TextView
+                    android:id="@+id/home_goalkeeper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/tv_gk"
+                    android:gravity="start" />
+
+            <TextView
+                    android:id="@+id/tv_gk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="@string/goal_keeper"
+                    style="@style/AppTheme" />
+
+            <!-- Away GK -->
+            <TextView
+                    android:id="@+id/away_goalkeeper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/tv_gk"
+                    android:gravity="end"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/df"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/gk"
+                android:layout_marginTop="12dp">
+
+            <!-- Home Df -->
+            <TextView
+                    android:id="@+id/home_defense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/tv_df"
+                    android:gravity="start" />
+
+            <TextView
+                    android:id="@+id/tv_df"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="Defense"
+                    style="@style/AppTheme" />
+
+            <!-- Away DF -->
+            <TextView
+                    android:id="@+id/away_defense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_toRightOf="@id/tv_df"
+                    android:layout_alignParentRight="true"
+                    android:gravity="end" />
+
+        </RelativeLayout>
+        <!-- Midfield -->
+        <RelativeLayout
+                android:id="@+id/mf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/df"
+                android:layout_marginTop="12dp">
+
+            <!-- Home Mf -->
+            <TextView
+                    android:id="@+id/home_midfield"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/tv_mf"
+                    android:gravity="start" />
+
+            <TextView
+                    android:id="@+id/tv_mf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="@string/midfield"
+                    style="@style/AppTheme" />
+
+            <!-- Away MF -->
+            <TextView
+                    android:id="@+id/away_midfield"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_toRightOf="@id/tv_mf"
+                    android:layout_alignParentRight="true"
+                    android:gravity="end" />
+
+        </RelativeLayout>
+        <!-- Forward -->
+        <RelativeLayout
+                android:id="@+id/fw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/mf"
+                android:layout_marginTop="12dp">
+
+            <!-- Home FW -->
+            <TextView
+                    android:id="@+id/home_forward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/tv_fw"
+                    android:gravity="start" />
+
+            <TextView
+                    android:id="@+id/tv_fw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="@string/forward"
+                    style="@style/AppTheme"/>
+
+            <!-- Away FW -->
+            <TextView
+                    android:id="@+id/away_forward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_toRightOf="@id/tv_fw"
+                    android:layout_alignParentRight="true"
+                    android:gravity="end" />
+
+        </RelativeLayout>
+
+        <!-- Subtitutes -->
+        <RelativeLayout
+                android:id="@+id/subs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/fw"
+                android:layout_marginTop="12dp">
+
+            <!-- Home FW -->
+            <TextView
+                    android:id="@+id/home_subtitutes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/tv_subs"
+                    android:gravity="start" />
+
+            <TextView
+                    android:id="@+id/tv_subs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="@string/subtitutes"
+                    style="@style/AppTheme" />
+
+            <!-- Away FW -->
+            <TextView
+                    android:id="@+id/away_subtitutes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_toRightOf="@id/tv_subs"
+                    android:layout_alignParentRight="true"
+                    android:gravity="end" />
+
+        </RelativeLayout>
+
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
