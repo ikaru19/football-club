@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.example.ikaru.footballclub.Event.EventFragment
+import com.example.ikaru.footballclub.Favorite.FavoriteEventAdapter
+import com.example.ikaru.footballclub.Favorite.FavoriteEventFragment
 import com.example.ikaru.footballclub.R
 import com.example.ikaru.footballclub.R.id.last_nav
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,6 +36,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.next_nav -> {
                     navbar = 2
                     createFragment(EventFragment.newInstance(navbar, id))
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_favorite -> {
+                    createFragment(FavoriteEventFragment())
                     return@OnNavigationItemSelectedListener true
                 }
             }

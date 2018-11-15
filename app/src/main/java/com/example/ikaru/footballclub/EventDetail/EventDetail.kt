@@ -1,7 +1,11 @@
 package com.example.ikaru.footballclub.EventDetail
 
+import android.database.sqlite.SQLiteConstraintException
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.view.Menu
+import android.view.MenuItem
 
 import com.example.ikaru.footballclub.model.Match
 import com.example.ikaru.footballclub.R
@@ -9,18 +13,27 @@ import com.example.ikaru.footballclub.R.color.colorAccent
 import com.example.ikaru.footballclub.api.SportApiMatch
 import com.example.ikaru.footballclub.api.TheSportDBApi
 import com.example.ikaru.footballclub.api.TheSportDBApiMatch
+import com.example.ikaru.footballclub.db.Favorite
+import com.example.ikaru.footballclub.db.database
 import com.example.ikaru.footballclub.model.Team
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_event_detail.*
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
+import com.example.ikaru.footballclub.R.drawable.ic_add_to_favorites
+import com.example.ikaru.footballclub.R.drawable.ic_added_to_favorites
 
 class EventDetail : AppCompatActivity() , EventDetailView{
     private lateinit var event: Match
-
-
     private lateinit var presenter: EventDetailPresenter
 
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +47,7 @@ class EventDetail : AppCompatActivity() , EventDetailView{
         tvTeam2Score.text = event.intAwayScore
         tvTeam2Name.text = event.strAwayTeam
 
+        favoriteState()
 
         val apiMatchDet = TheSportDBApi(event.idEvent).getmatchDetail()
         val apiHomeTeam = TheSportDBApi(event.idHomeTeam).getTeamDetail()
@@ -83,4 +97,79 @@ class EventDetail : AppCompatActivity() , EventDetailView{
 
         hideLoading()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        menuItem = menu
+        setFavorite()
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when(item?.itemId){
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            R.id.add_to_favorite -> {
+                if(isFavorite) removeFromFavorite() else addToFavorite()
+
+                isFavorite = !isFavorite
+                setFavorite()
+
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+    private fun addToFavorite(){
+        try {
+            database.use {
+                insert(Favorite.TABLE_FAVORITE,
+                    Favorite.EVENT_ID to event.idEvent,
+                    Favorite.EVENT_NAME to event.strEvent,
+                    Favorite.EVENT_DATE to event.dateEvent,
+                    Favorite.HOME_TEAM_ID to event.idHomeTeam,
+                    Favorite.HOME_TEAM_NAME to event.strHomeTeam,
+                    Favorite.HOME_TEAM_SCORE to event.intHomeScore,
+                    Favorite.AWAY_TEAM_ID to event.idAwayTeam,
+                    Favorite.AWAY_TEAM_NAME to event.strAwayTeam,
+                    Favorite.AWAY_TEAM_SCORE to event.intAwayScore)
+            }
+            snackbar(detailSwipe, "Added to favorite").show()
+        }catch (e: SQLiteConstraintException){
+            snackbar(detailSwipe, e.localizedMessage).show()
+        }
+    }
+
+    private fun removeFromFavorite(){
+        try {
+            database.use{
+                delete(Favorite.TABLE_FAVORITE, "(EVENT_ID = {id})", "id" to event.idEvent.orEmpty())
+            }
+            snackbar(detailSwipe, "Removed to favorite").show()
+        } catch (e: SQLiteConstraintException){
+            snackbar(detailSwipe, e.localizedMessage).show()
+        }
+    }
+
+    private fun setFavorite(){
+        val icon = if(isFavorite) ic_added_to_favorites else ic_add_to_favorites
+
+        menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, icon)
+    }
+
+    private fun favoriteState(){
+        database.use {
+            val result = select(Favorite.TABLE_FAVORITE)
+                .whereArgs("(EVENT_ID = {id})", "id" to event.idEvent.orEmpty())
+            val favorite = result.parseList(classParser<Favorite>())
+            if (!favorite.isEmpty()) isFavorite = true
+        }
+    }
+
 }
