@@ -5,7 +5,6 @@ apply plugin: "org.jetbrains.kotlin.android.extensions"
 apply plugin: 'kotlin-android-extensions'
 
 android {
-
     compileSdkVersion 28
     defaultConfig {
         buildConfigField "String", "BASE_URL", "\"https://www.thesportsdb.com/\""
@@ -53,4 +52,20 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    //Testing
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.22.0'
+    testImplementation "org.mockito:mockito-inline:2.22.0"
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:2.2.2") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
 }

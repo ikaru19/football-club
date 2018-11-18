@@ -27,6 +27,8 @@ import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 import com.example.ikaru.footballclub.R.drawable.ic_add_to_favorites
 import com.example.ikaru.footballclub.R.drawable.ic_added_to_favorites
+import com.example.ikaru.footballclub.util.changeFormatDate
+import com.example.ikaru.footballclub.util.strToDate
 
 class EventDetail : AppCompatActivity() , EventDetailView{
     private lateinit var event: Match
@@ -40,7 +42,8 @@ class EventDetail : AppCompatActivity() , EventDetailView{
         setContentView(R.layout.activity_event_detail)
 
         event = intent.getParcelableExtra("Event")
-
+        val date = strToDate(event.dateEvent)
+        someDate.text = changeFormatDate(date)
         someDate.text = event.dateEvent
         tvTeam1Score.text = event.intHomeScore
         tvTeam1Name.text = event.strHomeTeam
@@ -77,7 +80,7 @@ class EventDetail : AppCompatActivity() , EventDetailView{
     //home
         Picasso.get().load(homeTeam.strTeamBadge).into(ivTeam1Logo)
         tvTeam1Name.text = homeTeam.strTeam
-        if(match.intHomeScore.isNullOrEmpty()) tvTeam1Score.text = "-" else tvTeam1Score.text = match.intHomeShots
+//        if(match.intHomeScore.isNullOrEmpty()) tvTeam1Score.text = "-" else tvTeam1Score.text = match.intHomeShots
         if(match.intHomeShots.isNullOrEmpty()) home_shots.text = "-" else home_shots.text = match.intHomeShots
         if(match.strHomeLineupGoalkeeper.isNullOrEmpty())  home_goalkeeper.text = "-" else home_goalkeeper.text = match.strHomeLineupGoalkeeper?.replace(";","\n")
         if(match.strHomeLineupDefense.isNullOrEmpty())  home_defense.text = "-" else home_defense.text = match.strHomeLineupDefense?.replace(";","\n")
@@ -87,7 +90,7 @@ class EventDetail : AppCompatActivity() , EventDetailView{
         //away
         Picasso.get().load(awayTeam.strTeamBadge).into(ivTeam2Logo)
         tvTeam2Name.text = match.strAwayTeam
-        if(match.intAwayScore.isNullOrEmpty()) tvTeam2Score.text = "-" else tvTeam2Score.text = match.intAwayShots
+//        if(match.intAwayScore.isNullOrEmpty()) tvTeam2Score.text = "-" else tvTeam2Score.text = match.intAwayShots
         if(match.intAwayShots.isNullOrEmpty()) away_shots.text = "-" else away_shots.text = match.intAwayShots
         if(match.strAwayLineupGoalkeeper.isNullOrEmpty())  away_goalkeeper.text = "-" else away_goalkeeper.text = match.strAwayLineupGoalkeeper?.replace(";","\n")
         if(match.strAwayLineupDefense.isNullOrEmpty())  away_defense.text = "-" else away_defense.text = match.strAwayLineupDefense?.replace(";","\n")

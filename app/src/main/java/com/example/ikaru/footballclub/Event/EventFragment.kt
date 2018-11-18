@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ikaru.footballclub.EventDetail.EventDetail
 import com.example.ikaru.footballclub.R
+import com.example.ikaru.footballclub.api.ApiRespository
 import com.example.ikaru.footballclub.api.TheSportDBApiMatch
 import com.example.ikaru.footballclub.api.TheSportApiNext
 import com.example.ikaru.footballclub.api.TheSportDBApi
@@ -22,7 +23,7 @@ import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class EventFragment : Fragment(){
+class EventFragment : Fragment(), EventView{
     private var match : MutableList<Match> = mutableListOf()
     private lateinit var presenter: EventPresenter
     private lateinit var review: RecyclerView
@@ -43,7 +44,7 @@ class EventFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        val request = ApiRespository()
         val theSportDBApi = TheSportDBApi(leagueId)
         if (nav == 1){
             api = theSportDBApi.getprevsechdule()
@@ -52,7 +53,7 @@ class EventFragment : Fragment(){
         }
         val gson = Gson()
 
-        presenter = EventPresenter(this,api,gson)
+        presenter = EventPresenter(this,request,gson,nav)
         adapter = EventAdapter(match){
             ctx.startActivity<EventDetail>("Event" to it)
         }
@@ -68,17 +69,17 @@ class EventFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return createView(AnkoContext.create(ctx))
     }
-    fun showLoading() {
+    override fun showLoading() {
         swipe.isRefreshing = true
     }
 
-    fun hideLoading() {
+    override fun hideLoading() {
         swipe.isRefreshing = false
     }
 
 
 
-    fun showList(data: List<Match>) {
+    override fun showList(data: List<Match>) {
         hideLoading()
         match.clear()
         match.addAll(data)
@@ -102,6 +103,7 @@ class EventFragment : Fragment(){
                 )
 
                 review = recyclerView {
+                    id = R.id.rv_event_list
                     lparams(width = matchParent, height = wrapContent)
                     layoutManager = LinearLayoutManager(ctx)
                 }

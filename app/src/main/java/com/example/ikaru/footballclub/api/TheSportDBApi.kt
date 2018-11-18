@@ -4,17 +4,10 @@ import android.net.Uri
 import com.example.ikaru.footballclub.BuildConfig
 
 class TheSportDBApi(val id: String?){
-    private fun urlBuild(path: String?) = Uri.parse(BuildConfig.BASE_URL).buildUpon()
-        .appendPath("api")
-        .appendPath("v1")
-        .appendPath("json")
-        .appendPath(BuildConfig.TSDB_API_KEY)
-        .appendPath(path)
-        .appendQueryParameter("id", id)
-        .build().toString()
+    private fun urlBuild(path: String?, id: String?) = BuildConfig.BASE_URL+"api/v1/json/"+BuildConfig.TSDB_API_KEY+"/"+path+"?id="+id
 
-    fun getprevsechdule() = urlBuild("eventspastleague.php")
-    fun getnextsechdule() = urlBuild("eventsnextleague.php")
-    fun getmatchDetail() = urlBuild("lookupevent.php")
-    fun getTeamDetail() = urlBuild("lookupteam.php")
+    fun getprevsechdule() = urlBuild("eventspastleague.php",id)
+    fun getnextsechdule() = urlBuild("eventsnextleague.php",id)
+    fun getmatchDetail() = urlBuild("lookupevent.php",id)
+    fun getTeamDetail() = urlBuild("lookupteam.php",id)
 }

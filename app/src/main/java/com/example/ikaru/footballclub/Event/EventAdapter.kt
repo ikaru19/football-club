@@ -11,6 +11,8 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import com.example.ikaru.footballclub.model.Match
+import com.example.ikaru.footballclub.util.changeFormatDate
+import com.example.ikaru.footballclub.util.strToDate
 
 class EventAdapter(private val event: List<Match>, private val listener: (Match) -> Unit): RecyclerView.Adapter<EventAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,7 +35,8 @@ class EventAdapter(private val event: List<Match>, private val listener: (Match)
 
         fun bindItem(schedule: Match, listener: (Match) -> Unit){
 
-            matchDate.text = schedule.dateEvent
+            val date = strToDate(schedule.dateEvent)
+            matchDate.text = changeFormatDate(date)
             homeTeam.text = schedule.strHomeTeam
             homeScore.text = schedule.intHomeScore
 

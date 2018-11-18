@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.ikaru.footballclub.R
 import com.example.ikaru.footballclub.db.Favorite
+import com.example.ikaru.footballclub.util.changeFormatDate
+import com.example.ikaru.footballclub.util.strToDate
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -33,8 +35,8 @@ class FavoriteEventAdapter(private val favorite: List<Favorite>, private val lis
         private val awayScore: TextView = view.find(R.id.awayscore)
 
         fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit){
-
-            matchDate.text = favorite.eventDate
+            val date = strToDate(favorite.eventDate)
+            matchDate.text = changeFormatDate(date);
 
             homeTeam.text = favorite.homeTeam
             homeScore.text = favorite.homeScore
