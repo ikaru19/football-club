@@ -28,8 +28,6 @@ class HomeActivity {
 
     @Test
     fun testAppBehaviour(){
-        // Click menu
-        openActionBarOverflowOrOptionsMenu(activityRule.activity.applicationContext)
 
         Thread.sleep(15000)
         onView(withId(rv_event_list))

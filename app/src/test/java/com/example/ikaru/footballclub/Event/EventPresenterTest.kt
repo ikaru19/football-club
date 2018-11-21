@@ -59,7 +59,7 @@ class EventPresenterTest {
         presenter.getList()
 
         Mockito.verify(view).showLoading()
-//        Mockito.verify(view).showList(response.matches)
+        Mockito.verify(view).showList(response.events)
         Mockito.verify(view).hideLoading()
     }
 }

@@ -3,15 +3,14 @@ package com.example.ikaru.footballclub.Event
 import com.example.ikaru.footballclub.api.ApiRes
 import com.example.ikaru.footballclub.api.ApiRespository
 import com.example.ikaru.footballclub.api.TheSportDBApi
+import com.example.ikaru.footballclub.model.MatchResponse
 import com.example.ikaru.footballclub.util.CoroutineContextProvider
 import com.google.gson.Gson
-import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.coroutines.experimental.async
 
 class EventPresenter (private val view: EventView,
-                      private val api: ApiRespository,
+                      private val apiRepository: ApiRespository,
                       private val gson: Gson,
                       private val fixture: Int = 1,
                       private val context: CoroutineContextProvider = CoroutineContextProvider()
@@ -21,14 +20,16 @@ class EventPresenter (private val view: EventView,
     fun getList() {
         view.showLoading()
         val sportDB = TheSportDBApi("4328")
-        val path = if (fixture == 1) sportDB.getprevsechdule() else sportDB.getnextsechdule()
+        val api = if (fixture == 1) sportDB.getprevsechdule() else sportDB.getnextsechdule()
 
         async(context.main) {
-            val data = bg {gson.fromJson(api.doRequest(path), ApiRes::class.java)}
+            val data = bg {
+                gson.fromJson(apiRepository.doRequest(api), MatchResponse::class.java)
+//                gson.fromJson(apiRepository.doRequest(api), ApiRes::class.java)
+            }
 
             view.showList(data.await().events)
             view.hideLoading()
-
         }
     }
 }

@@ -1,4 +1,5 @@
 package com.example.ikaru.footballclub.model
+import com.example.ikaru.footballclub.model.Match
 
 data class MatchResponse(
-    val matches: List<Match>)
+    val events: List<Match>)
